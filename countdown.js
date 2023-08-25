@@ -2,7 +2,7 @@ let countdown = {};
 
 (self => {
     const {floor} = Math;
-    const dateStr = "2023.8.25 20:51:00";
+    const dateStr = "2023.9.25";
     const tar = new Date(dateStr).getTime();
 
     class CountTime {
