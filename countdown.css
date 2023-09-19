@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+}
+
+.count-down {
+    width: 100vw;
+    height: 100vh;
+
+    text-align: center;
+    font-family: "Agency FB", serif;
+    font-size: 50px;
+
+    display: flex;
+    flex-direction: column;
+    background: #66ccff;
+    animation: load-time 3s ease;
+}
+
+@keyframes load-time {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.count-down .text {
+    margin: auto 0;
+    color: white;
+}
+
+.count-down.finished {
+    display: none;
+}

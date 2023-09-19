@@ -1,13 +1,15 @@
-let countdown = {};
-
-(self => {
+let countdown = ((() => {
     const {floor} = Math;
+    // const dateStr = "2023.9.25";
     const dateStr = "2023.9.25";
     const tar = new Date(dateStr).getTime();
 
+    /**
+     *
+     */
     class CountTime {
         constructor(milli) {
-            if (milli < 0) return;
+            if (typeof milli !== "number" || milli < 0) return;
             milli = floor(milli / 1000);
             this.seconds = milli % 60;
             milli = floor(milli / 60);
@@ -41,38 +43,45 @@ let countdown = {};
     }
 
     let end = function defaultEnd() {
-        console.log("END")
+        console.log("END");
     };
 
-    /**
-     * @callback everyCallback
-     * @param {CountTime} time
-     */
-    /**
-     * @param {everyCallback} fn
-     */
-    self.everySec = function every(fn) {
-        let timer;
-        let delta = new CountTime(tar - Date.now());
+    return {
+        /**
+         * Callback function of everySec. Execute at every second before countdown end.
+         * @callback everyCallback
+         * @param {CountTime} time
+         */
+        /**
+         * Set the callback function executing at every second
+         * @param {everyCallback} callback
+         */
+        everySec(callback) {
+            let timer;
+            let delta = new CountTime(tar - Date.now());
 
-        function count() {
-            if (delta.count()) {
-                typeof end === "function" && end();
-                clearInterval(timer);
-            } else {
-                typeof fn === "function" && fn(delta);
+            function count() {
+                if (delta.count()) {
+                    typeof end === "function" && end();
+                    clearInterval(timer);
+                } else {
+                    typeof callback === "function" && callback(delta);
+                }
             }
-        }
 
-        typeof fn === "function" && fn(delta);
-        setTimeout(() => {
-            count();
-            timer = setInterval(count, 1000);
-        }, 1000 - new Date().getMilliseconds());
+            typeof callback === "function" && callback(delta);
+            setTimeout(() => {
+                count();
+                timer = setInterval(count, 1000);
+            }, 1000 - new Date().getMilliseconds());
+        },
+
+        /**
+         * Set the callback function executing when countdown is finished.
+         * @param {function} callback
+         */
+        finish(callback) {
+            callback && typeof callback === "function" && (end = callback);
+        },
     }
-
-    self.finish = function finish(fn) {
-        fn && typeof fn === "function" && (end = fn);
-    }
-
-})(countdown);
+})());
