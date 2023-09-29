@@ -1,7 +1,10 @@
 let countdown = ((() => {
     const {floor} = Math;
-    // const dateStr = "2023.9.25";
-    const dateStr = "2023.9.25";
+    let dateStr = `${new Date().getFullYear()}.9.25`;
+    if (new Date().getTime() > new Date(dateStr).getTime()) {
+        dateStr = `${new Date().getFullYear() + 1}.9.25`
+    }
+
     const tar = new Date(dateStr).getTime();
 
     /**

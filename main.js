@@ -3,7 +3,11 @@ let counter = document.querySelector(".count-down-time");
 
 countdown.everySec(left => {
     let {days, hours, minutes, seconds} = left;
-    counter.textContent = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`
+    counter.textContent =
+        `${days} day${days > 1 ? "s" : ""}, ` +
+        `${hours} hour${hours > 1 ? "s" : ""}, ` +
+        `${minutes} minute${minutes > 1 ? "s" : ""}, ` +
+        `${seconds} second${seconds > 1 ? "s" : ""}`
 })
 
 countdown.finish(() => {
